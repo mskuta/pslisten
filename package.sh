@@ -1,0 +1,35 @@
+#!/bin/sh -e
+
+# provide sane environment 
+\unalias -a
+PATH="$(getconf PATH)"
+
+SRCDIR="$(cd "$(dirname "$0")" && pwd)"
+PRJNAME="${SRCDIR##*/}"
+
+# create debian archive
+VERSION=$(git tag --sort version:refname | tail -n 1)
+if [ -z "$VERSION" ]; then
+	echo "Error: Version could not be determined." >&2
+	exit 1
+fi
+PKGNAME=${PRJNAME}_${VERSION}_all
+cd "$SRCDIR"
+mkdir --parents $PKGNAME/DEBIAN
+trap 'rm --recursive $PKGNAME' EXIT
+PREFIX=$PKGNAME/usr ./install.sh
+cat <<END >$PKGNAME/DEBIAN/control
+Package: $PRJNAME
+Version: $VERSION
+Architecture: all
+Depends: perl
+Description: Report processes owning listening sockets
+Homepage: https://github.com/mskuta/pslisten
+Maintainer: Martin Skuta (https://github.com/mskuta)
+Priority: optional
+Section: utils
+END
+dpkg-deb --build $PKGNAME
+
+exit 0
+
