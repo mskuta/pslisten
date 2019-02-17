@@ -8,7 +8,7 @@ SRCDIR="$(cd "$(dirname "$0")" && pwd)"
 PRJNAME="${SRCDIR##*/}"
 
 # create debian archive
-VERSION=$(git tag --sort version:refname | tail -n 1)
+VERSION=$(git tag --sort=version:refname | tail -n 1)
 if [ -z "$VERSION" ]; then
 	echo "Error: Version could not be determined." >&2
 	exit 1
@@ -24,7 +24,7 @@ Version: $VERSION
 Architecture: all
 Depends: perl
 Description: Report processes owning listening sockets
-Homepage: https://github.com/mskuta/pslisten
+Homepage: https://github.com/mskuta/$PRJNAME
 Maintainer: Martin Skuta (https://github.com/mskuta)
 Priority: optional
 Section: utils
