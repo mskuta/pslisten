@@ -22,7 +22,7 @@ cat <<END >$PKGNAME/DEBIAN/control
 Package: $PRJNAME
 Version: $VERSION
 Architecture: all
-Depends: perl
+Depends: perl-base
 Description: Report processes owning listening sockets
 Homepage: https://github.com/mskuta/$PRJNAME
 Maintainer: Martin Skuta (https://github.com/mskuta)
