@@ -79,8 +79,10 @@ sub gatherprocs {
 			if (opendir($dh_fd, $dn_fd)) {
 				foreach (grep { -l "$dn_fd/$_" } readdir($dh_fd)) {
 					# consider only processes with inodes belonging to listening sockets
+					my $target = readlink("$dn_fd/$_");
 					if (
-						readlink("$dn_fd/$_") =~ /^socket:\[(\d+)\]$/
+						defined($target)
+						and $target =~ /^socket:\[(\d+)\]$/
 						and exists($socksref->{$1})
 					) {
 						$procsref->{$1} = gatherproc($pid);
