@@ -1,26 +1,35 @@
-Description
-===========
+# Description
 
 pslisten reports processes owning listening sockets. The relevant data is gathered from the special proc file system (`/proc`).  It is intended to be an alternative to `netstat -tulpe`. Similar to netstat superuser rights are required to collect information about sockets belonging to other users. For each open socket the associated protocol, IP, port, process ID, effective user and full command line are shown.
 
 
-Installation
-============
+# Installation
 
-- Clone this repository.
-- Run the included installation script by entering `sudo ./install.sh`. The default target directory for the executable is `/usr/local/bin`. Use the environment variable `PREFIX` to change this. For example, to install the software under your home directory, type `PREFIX=$HOME/.local ./install.sh` and make sure `$HOME/.local/bin` is in your `$PATH`.
+## From package
 
-Debian and derivatives (f. e. Ubuntu) 
--------------------------------------
+### Debian and derivatives (Ubuntu, Raspbian, etc.)
 
-- Download the latest .deb package from the Releases page.
-- Install it by entering `sudo dpkg --install <.deb file name>`.
+1. Download the latest .deb package from the [Releases](https://github.com/mskuta/pslisten/releases/latest) page.
+2. Install it: `sudo dpkg --install pslisten_x.y.z_all.deb`
+
+## From source
+
+### As root user
+
+1. Clone this repository: `git clone https://github.com/mskuta/pslisten.git`
+2. Run the included installation script: `sudo pslisten/install.sh`
+3. Make sure `/usr/local/bin` is in your `$PATH`.
+
+### As unprivileged user
+
+1. Clone this repository: `git clone https://github.com/mskuta/pslisten.git`
+2. Run the included installation script: `PREFIX=$HOME/.local pslisten/install.sh`
+3. Make sure `$HOME/.local/bin` is in your `$PATH`.
 
 
-Usage
-=====
+# Usage
 
-```shell
+```
 Usage: pslisten [OPTIONS] [PID ...]
 Options:
   -4  Display only IP version 4 sockets.
@@ -29,8 +38,7 @@ Options:
   -u  Display only UDP sockets.
 ```
 
-Examples
---------
+## Examples
 
 Display listening IPv4 TCP sockets:
 ```shell
@@ -43,8 +51,7 @@ pgrep --exact java | xargs sudo pslisten
 ```
 
 
-License
-=======
+# License
 
 This software is distributed under the ISC license.
 
